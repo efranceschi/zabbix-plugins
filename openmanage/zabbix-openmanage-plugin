@@ -1,0 +1,28 @@
+#! /bin/bash
+
+error() {
+	echo ZBX_NOTSUPPORTED
+	echo "$*" 1>&2
+	exit 1
+}
+
+checkdeps() {
+	which $1 >/dev/null 2>&1 || error "Can't find $1"
+}
+
+checkdeps omreport
+checkdeps xpath
+
+CMD=$1; shift
+EXP=$1; shift
+
+test -z "$CMD" -o -z "$EXP" && error "Invalid syntax"
+
+OUT=$(omreport $CMD -fmt xml | xpath -q -e "//$EXP/text()")
+ERR=$?
+
+test $ERR -ne 0 -o -z "$OUT" && error "Unsupported option $CMD($EXP)"
+
+echo $OUT
+exit 0
+
