@@ -13,7 +13,7 @@ checkdeps() {
 checkdeps omreport
 checkdeps xpath
 
-CMD=$1; shift
+CMD=$(echo $1 | tr "_" " "); shift
 EXP=$1; shift
 
 test -z "$CMD" -o -z "$EXP" && error "Invalid syntax"
