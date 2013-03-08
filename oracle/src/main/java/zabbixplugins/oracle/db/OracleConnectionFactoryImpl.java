@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Date;
 
 import zabbixplugins.oracle.cmd.Command;
 import zabbixplugins.oracle.cmd.CommandException;
@@ -13,22 +12,17 @@ import zabbixplugins.oracle.cmd.Result;
 public class OracleConnectionFactoryImpl implements DBConnectionFactory {
 
 	private Connection getConnection() throws Exception {
-		System.err.println("CONN START: " + new Date());
-		try {
-			Class.forName ("oracle.jdbc.OracleDriver");
-			String username = System.getProperty("oracle.user");
-			String password = System.getProperty("oracle.password");
-			String host = System.getProperty("oracle.host");
-			String port = System.getProperty("oracle.port");
-			String sid = System.getProperty("oracle.sid");
-			if (port == null) {
-				port = "1521";
-			}
-			String url = "jdbc:oracle:thin:@" + host + ":" + port + ":" + sid;
-			return DriverManager.getConnection(url, username, password);
-		} finally {
-			System.err.println("CONN END: " + new Date());
+		Class.forName ("oracle.jdbc.OracleDriver");
+		String username = System.getProperty("oracle.user");
+		String password = System.getProperty("oracle.password");
+		String host = System.getProperty("oracle.host");
+		String port = System.getProperty("oracle.port");
+		String sid = System.getProperty("oracle.sid");
+		if (port == null) {
+			port = "1521";
 		}
+		String url = "jdbc:oracle:thin:@" + host + ":" + port + ":" + sid;
+		return DriverManager.getConnection(url, username, password);
 	}
 
 	@Override
