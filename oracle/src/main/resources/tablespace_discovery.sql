@@ -1,0 +1,1 @@
+select tablespace_name from dba_tablespaces where contents not in ('UNDO', 'TEMPORARY')

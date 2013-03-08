@@ -1,0 +1,38 @@
+Building
+========
+
+1. Download jdbc JAR from http://www.oracle.com/technetwork/indexes/downloads/index.html
+2. Install the driver into local maven repository:
+
+   mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc \
+     -Dversion=10.2.0.3.0 -Dpackaging=jar -Dfile=/path/to/ojdbc5.jar -DgeneratePom=true
+
+3. Compile and package the plugin
+
+   mvn clean package
+
+Configuring
+===========
+
+1. Configure a connection:
+
+   cp oracle.conf.sample oracle.conf
+   vi oracle.conf
+
+2. Tell zabbix agent about this plugin:
+
+   Debian way:
+      ln -sf zabbix-oracle-plugin.conf /etc/zabbix/zabbix_agentd.conf.d/
+
+   Redhat way:
+      ln -sf zabbix-oracle-plugin.conf /etc/zabbix/zabbix_agentd.d/
+      Uncomment the Include directive in /etc/zabbix/zabbix_agent.conf
+
+3. Increase the timeout parameter to 30 due to high response times from oracle database:
+
+   vi /etc/zabbix/zabbix_agentd.conf
+
+4. Restart zabbix agent:
+
+   service zabbix-agent restart
+

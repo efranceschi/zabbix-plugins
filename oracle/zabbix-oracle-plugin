@@ -1,0 +1,37 @@
+#! /bin/bash
+
+error() {
+	echo "$*" 1>&2
+	exit 1
+}
+
+checkdeps() {
+	which $1 >/dev/null 2>&1 || error "Can't find $1"
+}
+
+checkdeps java
+
+BASEDIR=${BASEDIR:=/usr/local/zabbix-plugins/oracle}
+ORACLE_CONF=$BASEDIR/oracle.conf
+JAR=$BASEDIR/target/zabbix-oracle-plugin.jar
+LOCKFILE=/tmp/zabbix-oracle-plugin.lock
+
+test -r $ORACLE_CONF || error "Can't find $ORACLE_CONF file"
+
+source $ORACLE_CONF
+
+if lockfile -30 -r 1 $LOCKFILE
+then
+	java -jar \
+		-Doracle.host=$ORACLE_HOST \
+		-Doracle.port=$ORACLE_PORT \
+		-Doracle.sid=$ORACLE_SID \
+		-Doracle.user=$ORACLE_USER \
+		-Doracle.password=$ORACLE_PASSWORD \
+		$JAR $*
+fi
+
+rm -f $LOCKFILE
+
+exit 0
+

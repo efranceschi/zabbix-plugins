@@ -1,0 +1,1 @@
+select sum(percent_space_used) result from V$FLASH_RECOVERY_AREA_USAGE

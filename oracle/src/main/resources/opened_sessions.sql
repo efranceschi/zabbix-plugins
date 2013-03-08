@@ -1,0 +1,1 @@
+select count(1) result from v$session where type <> 'BACKGROUND'

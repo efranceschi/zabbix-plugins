@@ -1,0 +1,1 @@
+select count(1) result from dba_objects where status = 'INVALID' and owner in ('APPQOSSYS','DBSNMP','EXFSYS','ORACLE_OCM','OUTLN','PUBLIC','SYS','SYSTEM','WMSYS','XDB')

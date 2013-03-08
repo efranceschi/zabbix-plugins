@@ -1,0 +1,6 @@
+#JAVA_HOME=/path/to/java
+ORACLE_HOST=server.example.com
+ORACLE_PORT=1521
+ORACLE_SID=mysid
+ORACLE_USER=zabbix
+ORACLE_PASSWORD=zabbix
